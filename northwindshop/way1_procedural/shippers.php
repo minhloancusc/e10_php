@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(empty($_SESSION['username'])){
+    header("location:login.php");
+}
 include_once './ketnoicsdl.php';
 //Insert new Shipper
 if (!empty($_REQUEST['createshipper'])) {
@@ -39,6 +43,7 @@ if (!empty($_REQUEST['editshipper'])) {
     $sql = "update shippers set CompanyName='$nameedit',Phone='$phoneedit' where ShipperID=$idedit ";    
     if (mysqli_query($conn, $sql)) {
         echo "<script> alert('Update record created successfully');</script>";
+        header("location:shippers.php");
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
@@ -51,6 +56,7 @@ if (!empty($_REQUEST['editshipper'])) {
         <title></title>        
     </head>
     <body>
+        <h2>Hello <?= $_SESSION['username']['CompanyName'] ?>!</h2>
         <form method="POST">
             <input type="hidden" name="shipperID" value="<?= (!empty($shipper_update)) ? $shipper_update['ShipperID'] : "" ?>" required />
             <table border="0">

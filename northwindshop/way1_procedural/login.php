@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include_once './ketnoicsdl.php';
     if(!empty($_REQUEST['btnlogin'])){
         $uname = $_REQUEST['username'];
@@ -6,6 +7,8 @@
         $sql = "select CustomerID,CompanyName from customers where CustomerID='$uname' and pass='$pword'";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION['username'] = $row;
             header("location:admin_dashboard.php");
         }else{
             echo "Vui long dang nhap lai";
