@@ -1,7 +1,7 @@
 <?php
 include_once './ketnoicsdl.php';
 //Insert new Shipper
-if (!empty($_REQUEST['create'])) {
+if (!empty($_REQUEST['createshipper'])) {
     $cname = $_REQUEST['companyName'];
     $phone = $_REQUEST['phone'];
     $sql = "insert into shippers (CompanyName,Phone) values ('$cname','$phone')";
@@ -25,7 +25,23 @@ if ((!empty($_REQUEST['action'])) && ($_REQUEST['action'] == 'delete')) {
 }
 //Find and Edit Shipper
 if ((!empty($_REQUEST['action'])) && ($_REQUEST['action'] == 'edit')) {
-    echo 'Update du lieu';
+    if (!empty($_REQUEST['idshipper'])) {
+        $idedit = $_REQUEST['idshipper'];
+        $sql = "select ShipperID,CompanyName,Phone from shippers where ShipperID = $idedit";
+        $result = mysqli_query($conn, $sql);
+        $shipper_update = mysqli_fetch_assoc($result);
+    }
+}
+if (!empty($_REQUEST['editshipper'])) {
+    $idedit = $_REQUEST['shipperID'];
+    $nameedit = $_REQUEST['companyName'];
+    $phoneedit = $_REQUEST['phone'];
+    $sql = "update shippers set CompanyName='$nameedit',Phone='$phoneedit' where ShipperID=$idedit ";    
+    if (mysqli_query($conn, $sql)) {
+        echo "<script> alert('Update record created successfully');</script>";
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -36,6 +52,7 @@ if ((!empty($_REQUEST['action'])) && ($_REQUEST['action'] == 'edit')) {
     </head>
     <body>
         <form method="POST">
+            <input type="hidden" name="shipperID" value="<?= (!empty($shipper_update)) ? $shipper_update['ShipperID'] : "" ?>" required />
             <table border="0">
                 <thead>
                     <tr>
@@ -45,57 +62,61 @@ if ((!empty($_REQUEST['action'])) && ($_REQUEST['action'] == 'edit')) {
                 <tbody>
                     <tr>
                         <td>Company Name:</td>
-                        <td><input type="text" name="companyName" value="" required /></td>
+                        <td><input type="text" name="companyName" value="<?= (!empty($shipper_update)) ? $shipper_update['CompanyName'] : "" ?>" required /></td>
                     </tr>
                     <tr>
                         <td>Phone: </td>
-                        <td><input type="text" name="phone" value="" required/></td>
+                        <td><input type="text" name="phone" value="<?= (!empty($shipper_update)) ? $shipper_update['Phone'] : "" ?>" required/></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>
-                            <input type="submit" value="Create" name="create" />
-                            <input type="reset" value="Reset" name="reset" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </form>
-        <br/>
-        <?php
-        $sql = "Select ShipperID,CompanyName,Phone from shippers";
-        $result = mysqli_query($conn, $sql);
-        ?>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Shipper ID</th>
-                    <th>Company Name</th> 
-                    <th>Phone</th>
-                    <th>Edit</th>.
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        ?>    
-                        <tr>
-                            <td><?= $row["ShipperID"] ?></td>
-                            <td><?= $row["CompanyName"] ?></td>     
-                            <td><?= $row["Phone"] ?></td>
-                            <td><a href="shippers.php?action=edit&idshipper=<?= $row["ShipperID"] ?>"><img src="images/iconedit.png" width="20px"/></a></td>
-                            <td><a href="shippers.php?action=delete&idshipper=<?= $row["ShipperID"] ?>"><img src="images/icondelete.png" width="20px"/></a></td>
+                            <?php if (empty($shipper_update)) { ?>
+                                <input type="submit" value="Create" name="createshipper" />
+                                <?php } else{ ?>
+                                <input type="submit" value="Update" name="editshipper" />
+                                <?php } ?>
+                                <input type="reset" value="Reset" name="reset" />
+                            </td>
                         </tr>
-                        <?php
+                    </tbody>
+                </table>
+
+            </form>
+            <br/>
+            <?php
+            $sql = "Select ShipperID,CompanyName,Phone from shippers";
+            $result = mysqli_query($conn, $sql);
+            ?>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Shipper ID</th>
+                        <th>Company Name</th> 
+                        <th>Phone</th>
+                        <th>Edit</th>.
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            ?>    
+                            <tr>
+                                <td><?= $row["ShipperID"] ?></td>
+                                <td><?= $row["CompanyName"] ?></td>     
+                                <td><?= $row["Phone"] ?></td>
+                                <td><a href="shippers.php?action=edit&idshipper=<?= $row["ShipperID"] ?>"><img src="images/iconedit.png" width="20px"/></a></td>
+                                <td><a href="shippers.php?action=delete&idshipper=<?= $row["ShipperID"] ?>"><img src="images/icondelete.png" width="20px"/></a></td>
+                            </tr>
+                            <?php
+                        }
+                    } else {
+                        echo "0 results";
                     }
-                } else {
-                    echo "0 results";
-                }
-                mysqli_close($conn);
-                ?>      
+                    mysqli_close($conn);
+                    ?>      
             </tbody>
         </table>
     </body>
