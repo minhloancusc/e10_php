@@ -57,6 +57,7 @@ if (!empty($_REQUEST['editshipper'])) {
     </head>
     <body>
         <h2>Hello <?= $_SESSION['username']['CompanyName'] ?>!</h2>
+        <a href="signout.php">Logout</a>
         <form method="POST">
             <input type="hidden" name="shipperID" value="<?= (!empty($shipper_update)) ? $shipper_update['ShipperID'] : "" ?>" required />
             <table border="0">

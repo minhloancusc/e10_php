@@ -13,6 +13,7 @@ if(empty($_SESSION['username'])){
     <body>
         <h1>Admin Dashboard</h1>
         <h2>Hello <?= $_SESSION['username']['CompanyName'] ?>!</h2>
+        <a href="signout.php">Logout</a>        
         <a href="shippers.php">Shipper</a>
     </body>
 </html>

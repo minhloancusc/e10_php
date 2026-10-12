@@ -9,6 +9,7 @@
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
             $_SESSION['username'] = $row;
+            setcookie("uname", $row['CustomerID'], time()+60*60*24*100 );
             header("location:admin_dashboard.php");
         }else{
             echo "Vui long dang nhap lai";
@@ -22,6 +23,7 @@
         <title></title>
     </head>
     <body>
+       <?=(!empty($_COOKIE['uname']))? $_COOKIE['uname']:"" ?>
        <form name="flogin" method="POST" action="login.php">
             <table border="0">
                 <thead>
