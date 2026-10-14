@@ -1,8 +1,9 @@
 <?php
 session_start();
-require_once './dbconnect.php';
-require_once './product_data.php';
-$product = new Product();
+require_once './config/myconnection.php';
+require_once './model/productclass.php';
+$conn = MyConnection::connectDatabase();
+$product = new ProductClass();
 ?>
 <?php
 //remove cart
@@ -58,7 +59,7 @@ if (isset($_GET['action']) && $_GET['action'] == "empty") {
                                 <td style="text-align:right;"><?php echo $value["quantity"]; ?></td>
                                 <td  style="text-align:right;"><?php echo "$ " . $value["price"]; ?></td>
                                 <td  style="text-align:right;"><?php echo "$ " . number_format($item_price, 2); ?></td>
-                                <td style="text-align:center;"><a href="?action=remove&id=<?php echo $item; ?>" class="btnRemoveAction"><img src="images/icon-delete.png" alt="Remove Item" width="16px" /></a></td>
+                                <td style="text-align:center;"><a href="?action=remove&id=<?php echo $item; ?>" class="btnRemoveAction"><img src="images/icons/icondelete.png" alt="Remove Item" width="16px" /></a></td>
                             </tr>
                             <?php
                             $total_quantity += $value["quantity"];
@@ -84,7 +85,7 @@ if (isset($_GET['action']) && $_GET['action'] == "empty") {
             ?>
             <div class="no-records">
                 <p class="card-text">
-                    <a href="product_view.php" class="btn btn-primary btn-sm">
+                    <a href="product_list.php" class="btn btn-primary btn-sm">
                         CONTINUOUS SHOPPING
                     </a>
                 </p>

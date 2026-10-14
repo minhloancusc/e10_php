@@ -11,11 +11,10 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
     $id = intval($_GET['id']);
     if (isset($_SESSION['cart'][$id])) {
         $_SESSION['cart'][$id]['quantity']++;
-    } else {
-        $result = $product->findProductsbyID($conn, $id);
-        $row = $result->fetch_assoc();
+    } else {        
+        $row = $product->findProductbyID($conn, $id);
         if (isset($row['ProductID'])) {
-            $_SESSION['cart'][$row['ProductID']] = array("name" => $row['ProductName'], "quantity" => 1, "price" => $row['UnitPrice'], "image" => $row['ImageURL']);
+            $_SESSION['cart'][$row['ProductID']] = array("name" => $row['ProductName'], "quantity" => 1, "price" => $row['UnitPrice'], "image" => $row['imageURL']);            
         } else {
             $message = "This product id is invalid!";
         }
@@ -31,7 +30,6 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="style.css" rel="stylesheet"/>
         <title>View Product</title>
-
     </head>
     <body>
         <a href="cart_process.php"><img src="./images/icons/iconshoppingcart.png" width="50px"/>GO TO THE CART</a>        
@@ -75,7 +73,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
                                     <?php echo $row['ProductName'] ?>
                                 </p>
                                 <p class="card-text">
-                                    <a href="product_view.php?action=add&id=<?php echo $row['ProductID'] ?>" class="btn btn-primary btn-sm">
+                                    <a href="product_list.php?action=add&id=<?php echo $row['ProductID'] ?>" class="btn btn-primary btn-sm">
                                         Add Cart
                                     </a>
                                 </p>
