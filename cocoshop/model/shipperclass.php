@@ -6,26 +6,22 @@ class ShipperClass {
     
     public function showAllShipper($conn) {
         $sql = "select ShipperID,CompanyName,Phone from shippers";
-        $result = $conn->query($sql);
-        $conn->close();
+        $result = $conn->query($sql);        
         return $result;
     }
     
     public function addShipper($conn, $companyName, $phone) {
         $sql = "insert into shippers (CompanyName,Phone) values ('$companyName','$phone')";
-        if ($conn->query($sql)) {
-            $conn->close();
+        if ($conn->query($sql)) {           
             return true;
-        } else {
-            $conn->close();
+        } else {            
             return false;
         }
     }
 
     public function deleteShipper($conn, $shipperid) {
         $sql = "delete from shippers where ShipperID = $shipperid";
-        if ($conn->query($sql)) {
-            $conn->close();
+        if ($conn->query($sql)) {            
             return true;
         } else {
             $conn->close();
@@ -35,11 +31,9 @@ class ShipperClass {
 
     public function updateShipper($conn, $shipperid, $companyNameNew, $phoneNew) {
         $sql = "update shippers set CompanyName = '$companyNameNew', Phone = '$phoneNew' where  ShipperID = $shipperid";
-        if ($conn->query($sql)) {
-            $conn->close();
+        if ($conn->query($sql)) {            
             return true;
-        } else {
-            $conn->close();
+        } else {            
             return false;
         }
     }
