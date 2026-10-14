@@ -1,8 +1,8 @@
 <?php
-//session_start();
-//if(empty($_SESSION['username'])){
-//    header("location:login.php");
-//}
+session_start();
+if(empty($_SESSION['username'])){
+    header("location:login.php");
+}
 include_once '../config/myconnection.php';
 include_once '../model/shipperclass.php';
 $conn = MyConnection::connectDatabase();
@@ -55,7 +55,7 @@ if (!empty($_REQUEST['editshipper'])) {
         <title>Shippers</title>      
     </head>
     <body>
-        <h2>Hello <?= $_SESSION['username']['CompanyName'] ?>!</h2>
+        <h2>Hello <?= $_SESSION['username'] ?>!</h2>
         <a href="signout.php">Logout</a>
         <form method="POST">
             <input type="hidden" name="shipperID" value="<?= (!empty($shipper_update)) ? $shipper_update['ShipperID'] : "" ?>" required />
