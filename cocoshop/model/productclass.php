@@ -1,15 +1,17 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
+class ProductClass {
 
-/**
- * Description of productclass
- *
- * @author minhloan
- */
-class productclass {
-    //put your code here
+    public function showAllProducts($conn) {
+        $sql = "select ProductID,ProductName,UnitPrice,UnitsInStock,imageURL from products";
+        $result = $conn->query($sql);
+        return $result;
+    }
+    
+    public function findProductbyID($conn, $productid) {
+        $sql = "select ProductID,ProductName,UnitPrice,UnitsInStock,imageURL from products where  ProductID = $productid";
+        $result = $conn->query($sql);
+        echo $result->num_rows;
+        return $result->fetch_assoc();
+    }
 }

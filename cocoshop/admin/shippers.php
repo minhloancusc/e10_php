@@ -112,8 +112,8 @@ if (!empty($_REQUEST['editshipper'])) {
                             <td><?= $row["ShipperID"] ?></td>
                             <td><?= $row["CompanyName"] ?></td>     
                             <td><?= $row["Phone"] ?></td>
-                            <td><a href="shippers.php?action=edit&idshipper=<?= $row["ShipperID"] ?>"><img src="../images/iconedit.png" width="20px"/></a></td>
-                            <td><a href="shippers.php?action=delete&idshipper=<?= $row["ShipperID"] ?>"><img src="../images/icondelete.png" width="20px"/></a></td>
+                            <td><a href="shippers.php?action=edit&idshipper=<?= $row["ShipperID"] ?>"><img src="../images/icons/iconedit.png" width="20px"/></a></td>
+                            <td><a href="shippers.php?action=delete&idshipper=<?= $row["ShipperID"] ?>"><img src="../images/icons/icondelete.png" width="20px"/></a></td>
                         </tr>
                         <?php
                     }
