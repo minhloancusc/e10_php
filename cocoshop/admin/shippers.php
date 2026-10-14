@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(empty($_SESSION['username'])){
+if (empty($_SESSION['username'])) {
     header("location:login.php");
 }
 include_once '../config/myconnection.php';
@@ -10,7 +10,7 @@ $shipper = new ShipperClass();
 //Insert new Shipper
 if (!empty($_REQUEST['createshipper'])) {
     $cname = $_REQUEST['companyName'];
-    $phone = $_REQUEST['phone'];      
+    $phone = $_REQUEST['phone'];
     if ($shipper->addShipper($conn, $cname, $phone)) {
         echo "<script> alert('New record created successfully');</script>";
     } else {
@@ -31,14 +31,14 @@ if ((!empty($_REQUEST['action'])) && ($_REQUEST['action'] == 'delete')) {
 //Find and Edit Shipper
 if ((!empty($_REQUEST['action'])) && ($_REQUEST['action'] == 'edit')) {
     if (!empty($_REQUEST['idshipper'])) {
-        $idedit = $_REQUEST['idshipper'];                        
+        $idedit = $_REQUEST['idshipper'];
         $shipper_update = $shipper->findShipperbyID($conn, $idedit);
     }
 }
 if (!empty($_REQUEST['editshipper'])) {
     $idedit = $_REQUEST['shipperID'];
     $nameedit = $_REQUEST['companyName'];
-    $phoneedit = $_REQUEST['phone'];    
+    $phoneedit = $_REQUEST['phone'];
     if ($shipper->updateShipper($conn, $idedit, $nameedit, $phoneedit)) {
         echo "<script> alert('Update record created successfully');</script>";
         header("location:shippers.php");
@@ -56,7 +56,7 @@ if (!empty($_REQUEST['editshipper'])) {
     </head>
     <body>
         <h2>Hello <?= $_SESSION['username'] ?>!</h2>
-        <a href="signout.php">Logout</a>
+        <a href="../signout.php">Logout</a>
         <form method="POST">
             <input type="hidden" name="shipperID" value="<?= (!empty($shipper_update)) ? $shipper_update['ShipperID'] : "" ?>" required />
             <table border="0">

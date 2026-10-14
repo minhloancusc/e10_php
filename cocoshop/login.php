@@ -1,19 +1,19 @@
 <?php
-    session_start();
-    include_once './config/myconnection.php';
-    include_once './model/customerclass.php';
-    $conn = MyConnection::connectDatabase();
-    $customer = new CustomerClass();
-    if(!empty($_REQUEST['btnlogin'])){
-        $uname = $_REQUEST['username'];
-        $pword = $_REQUEST['password'];        
-        if ($customer->checkLogin($conn, $uname, $pword)) {            
-            $_SESSION['username'] = $uname;            
-            header("location:./admin/admin_dashboard.php");
-        }else{
-            echo "Vui long dang nhap lai";
-        }
+session_start();
+include_once './config/myconnection.php';
+include_once './model/customerclass.php';
+$conn = MyConnection::connectDatabase();
+$customer = new CustomerClass();
+if (!empty($_REQUEST['btnlogin'])) {
+    $uname = $_REQUEST['username'];
+    $pword = $_REQUEST['password'];
+    if ($customer->checkLogin($conn, $uname, $pword)) {
+        $_SESSION['username'] = $uname;
+        header("location:./admin/admin_dashboard.php");
+    } else {
+        echo "Vui long dang nhap lai";
     }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +22,7 @@
         <title></title>
     </head>
     <body>      
-       <form name="flogin" method="POST" action="login.php">
+        <form name="flogin" method="POST" action="login.php">
             <table border="0">
                 <thead>
                     <tr>
