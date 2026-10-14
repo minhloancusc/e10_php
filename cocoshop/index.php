@@ -10,5 +10,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Project/PHP/PHPProject.php to edi
     </head>
     <body>
         <a href="login.php">Login</a>
+        <?php include 'login.php'; ?>
     </body>
 </html>
