@@ -6,11 +6,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Admin Dashboard</title>
     </head>
     <body>
-        <?php
-        // put your code here
-        ?>
+        <a href="region.php">Region</a> <br/>
+        <a href="shippers.php">Shippers</a> <br/>
     </body>
 </html>

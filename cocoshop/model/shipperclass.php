@@ -12,7 +12,7 @@ class ShipperClass {
     
     public function addShipper($conn, $shipperid, $companyName, $phone) {
         $sql = "insert into shippers (ShipperID,CompanyName,Phone) values ($shipperid,'$companyName','$phone')";
-        if (new mysqli($conn, $sql)) {
+        if ($conn->query($sql)) {
             return true;
         } else {
             return false;
@@ -21,7 +21,7 @@ class ShipperClass {
 
     public function deleteShipper($conn, $shipperid) {
         $sql = "delete from shippers where ShipperID = $shipperid";
-        if (new mysqli($conn, $sql)) {
+        if ($conn->query($sql)) {
             return true;
         } else {
             return false;
@@ -30,7 +30,7 @@ class ShipperClass {
 
     public function updateShipper($conn, $shipperid, $companyNameNew, $phoneNew) {
         $sql = "update shippers set CompanyName = '$companyNameNew', Phone = '$phoneNew' where  ShipperID = $shipperid";
-        if (new mysqli($conn, $sql)) {
+        if ($conn->query($sql)) {
             return true;
         } else {
             return false;
@@ -39,14 +39,14 @@ class ShipperClass {
 
     public function findShipperbyID($conn, $shipperid) {
         $sql = "select ShipperID,CompanyName,Phone from shippers where  ShipperID = $shipperid";
-        $result = new mysqli($conn, $sql);
+        $result = $conn->query($sql);
         echo $result->num_rows;
         return $result->fetch_assoc();
     }
 
     public function findShipperbyName($conn, $keyword) {
         $sql = "ShipperID,CompanyName,Phone from shippers where CompanyName like '%$keyword%'";
-        $result = new mysqli($conn, $sql);
+        $result = $conn->query($sql);
         $listShipper = array();
         while ($row = $result->fetch_assoc()) {
             $listShipper[] = $row;

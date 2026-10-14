@@ -7,22 +7,25 @@ class RegionClass {
 
     public function showAllRegion($conn) {
         $sql = "select RegionID,RegionDescription from Region";
-        $result = new mysqli($conn, $sql);
+        $result = $conn->query($sql);
         return $result;
     }
 
     public function addRegion($conn, $regionid, $regionDes) {
-        $sql = "insert into region (RegionID,RegionDescription) values ($regionid,'$regionDes')";
-        if (new mysqli($conn, $sql)) {
-            return true;
-        } else {
+        try {
+            $sql = "insert into region (RegionID,RegionDescription) values ($regionid,'$regionDes')";
+            if ($conn->query($sql)) {
+                return true;
+            }
+        } catch (mysqli_sql_exception $e) {
+            error_log("Lỗi SQL: " . $e->getMessage());
             return false;
         }
     }
 
     public function deleteRegion($conn, $regionid) {
         $sql = "delete from region where RegionID = $regionid";
-        if (new mysqli($conn, $sql)) {
+        if ($conn->query($sql)) {
             return true;
         } else {
             return false;
@@ -31,7 +34,7 @@ class RegionClass {
 
     public function updateRegion($conn, $regionid, $regionDesNew) {
         $sql = "update region set RegionDescription = '$regionDesNew' where RegionID = $regionid";
-        if (new mysqli($conn, $sql)) {
+        if ($conn->query($sql)) {
             return true;
         } else {
             return false;
@@ -40,14 +43,14 @@ class RegionClass {
 
     public function findRegionbyID($conn, $regionid) {
         $sql = "select RegionID,RegionDescription from Region where RegionID = $regionid";
-        $result = new mysqli($conn, $sql);
+        $result = $conn->query($sql);
         echo mysqli_num_rows($result);
         return $result->fetch_assoc();
     }
 
     public function findRegionbyName($conn, $keyword) {
         $sql = "select RegionID,RegionDescription from Region where RegionDescription like '%$keyword%'";
-        $result = new mysqli($conn, $sql);
+        $result = $conn->query($sql);
         $listRegion = array();
         while ($row = $result->fetch_assoc()) {
             $listRegion[] = $row;
