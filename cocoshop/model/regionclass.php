@@ -1,4 +1,5 @@
 <?php
+
 class RegionClass {
 
     private $regionID;
@@ -6,13 +7,13 @@ class RegionClass {
 
     public function showAllRegion($conn) {
         $sql = "select RegionID,RegionDescription from Region";
-        $result = mysqli_query($conn, $sql);
+        $result = new mysqli($conn, $sql);
         return $result;
     }
 
     public function addRegion($conn, $regionid, $regionDes) {
         $sql = "insert into region (RegionID,RegionDescription) values ($regionid,'$regionDes')";
-        if (mysqli_query($conn, $sql)) {
+        if (new mysqli($conn, $sql)) {
             return true;
         } else {
             return false;
@@ -21,7 +22,7 @@ class RegionClass {
 
     public function deleteRegion($conn, $regionid) {
         $sql = "delete from region where RegionID = $regionid";
-        if (mysqli_query($conn, $sql)) {
+        if (new mysqli($conn, $sql)) {
             return true;
         } else {
             return false;
@@ -30,7 +31,7 @@ class RegionClass {
 
     public function updateRegion($conn, $regionid, $regionDesNew) {
         $sql = "update region set RegionDescription = '$regionDesNew' where RegionID = $regionid";
-        if (mysqli_query($conn, $sql)) {
+        if (new mysqli($conn, $sql)) {
             return true;
         } else {
             return false;
@@ -39,22 +40,20 @@ class RegionClass {
 
     public function findRegionbyID($conn, $regionid) {
         $sql = "select RegionID,RegionDescription from Region where RegionID = $regionid";
-        $result = mysqli_query($conn, $sql);
+        $result = new mysqli($conn, $sql);
         echo mysqli_num_rows($result);
-        return mysqli_fetch_assoc($result);
+        return $result->fetch_assoc();
     }
 
     public function findRegionbyName($conn, $keyword) {
         $sql = "select RegionID,RegionDescription from Region where RegionDescription like '%$keyword%'";
-        $result = mysqli_query($conn, $sql);
+        $result = new mysqli($conn, $sql);
         $listRegion = array();
-        while ($row = mysqli_fetch_assoc($result)) {
+        while ($row = $result->fetch_assoc()) {
             $listRegion[] = $row;
         }
         return $listRegion;
     }
-
-    //Getter - Setter
 
     public function get_regionID() {
         return $this->regionID;
